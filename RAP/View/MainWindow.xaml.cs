@@ -63,6 +63,11 @@ namespace RAP.View
                     researchFull.GivenName = i.GivenName;
                     researchFull.FamilyName = i.FamilyName;
                     researchFull.FullName = i.FullName;
+                    researchFull.Title = i.Title;
+                    researchFull.Unit = i.Unit;
+                    researchFull.Campus = i.Campus;
+                    researchFull.Email = i.Email;
+                    researchFull.CurrentJob = i.CurrentJob;
                     //LBIid.Content = i.Id;
                     //LBIFN.Content = i.GivenName;
                     //LBILN.Content = i.FamilyName;

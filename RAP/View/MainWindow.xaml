@@ -36,7 +36,7 @@
                 <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                     <ComboBox x:Name="DBLevel"  Height="25" Margin="5,5,5,5" SelectionChanged="DBLevel_SelectionChanged" Loaded="DBLevel_Loaded">
                     </ComboBox>
-                    <ListBox x:Name="lbResearcher" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,5,5,5" SelectionChanged="LbResearcher_SelectionChanged"/>
+                    <ListBox x:Name="lbResearcher" Height="497" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,5,5,5" SelectionChanged="LbResearcher_SelectionChanged" FontSize="14"/>
                 </StackPanel>
             </Grid>
         <Grid Grid.Row="1" Grid.Column="1" Margin="5,0,5,0">
@@ -73,21 +73,77 @@
                         <Label Content="Commenced current position:"></Label>
                         <Label Content="{Binding FullName}"></Label>
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Previous positions:"></Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <ListBox> 18/01/2011 position reserved</ListBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Tenure:"></Label>
+                        <Label Content="{Binding Tenure}"></Label>
+                        <Label Content="Publications:"></Label>
+                        <Label Content="{Binding Publications}"></Label>
+                        <Button>Cumulative Count</Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="3-year average:"></Label>
+                        <Label Content="{Binding TYAve}"></Label>
+                        <Label Content="Performance:"></Label>
+                        <Label Content="{Binding PublicationCount}"></Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Supervisions:"></Label>
+                        <Label Content="{Binding Supervisions}"></Label>
+                        <Button>Show Names</Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Degree:"></Label>
+                        <Label Content="{Binding Degree}"></Label>
+                        <Label Content="Supervisor:"></Label>
+                        <Label Content="{Binding Supervisor}"></Label>
+                    </StackPanel>
+                    <StackPanel>
+                        <ListBox Height="200" ItemsSource="{Binding Path=Publications}"/>
+                    </StackPanel>
                 </StackPanel>
             </Grid>
-        <Grid Grid.Row="1" Grid.Column="2">
-            <!-- <Button x:Name="publication" Grid.Column="1" Margin="45,155,44,148"/> -->
-            <StackPanel x:Name="c" Orientation="Vertical" Grid.Column="2">
-                <StackPanel x:Name="d" Orientation="Horizontal" Height="156">
-                    <Label Content="lable1" Width="87"></Label>
-                    <Label Content="lable2" Width="86"></Label>
+            <Grid Grid.Row="1" Grid.Column="2">
+              <StackPanel>
+                <StackPanel x:Name="d" Orientation="Horizontal">
+                    <Label Content="Title"></Label>
+                    <Label Content="{Binding Title}"></Label>
                 </StackPanel>
-                <StackPanel x:Name="e" Orientation="Horizontal" Height="162">
-                    <Label Content="lable3" Width="87"/>
-                    <Label Content="lable4" Width="86"/>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="DOI:"></Label>
+                    <Label Content="{Binding DOI}"></Label>
                 </StackPanel>
-            </StackPanel>
-        </Grid>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Authors:"></Label>
+                    <Label Content="{Binding FullName}"></Label>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Publication Year:"></Label>
+                    <Label Content="{Binding PubYear}"></Label>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Type:"></Label>
+                    <Label Content="{Binding Type}"></Label>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Cite As:"></Label>
+                    <Label Content="{Binding CiteAs}"></Label>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Availability Date:"></Label>
+                    <Label Content="{Binding AvaDate}"></Label>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Age:"></Label>
+                    <Label Content="{Binding Age}"></Label>
+                </StackPanel>
+              </StackPanel>
+            </Grid>
     </Grid>
     </Viewbox>
 </Window>

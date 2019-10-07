@@ -123,8 +123,9 @@ namespace RAP.Database
                         Degree = rdr.GetString(10),
                         SupervisorId = rdr.GetInt32(11),
                         UtasStart = rdr.GetDateTime(12),
-                        CurrentStart = rdr.GetDateTime(13)
-                    });
+                        CurrentStart = rdr.GetDateTime(13),
+                        CurrentJob = rdr.GetString(7)
+                    }); ;
                 }
             }
             catch (MySqlException e)

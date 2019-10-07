@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RAP.Database;
 
 namespace RAP.Research
 {
@@ -67,6 +68,90 @@ namespace RAP.Research
         public DateTime UtasStart { set; get; }
 
         public DateTime CurrentStart { set; get; }
+
+        private string currentJob;
+
+        public string CurrentJob
+        {
+            set
+            {
+             /*   switch (value)
+                {
+                    case "Student":
+                        currentJob = "Student";
+                        break;
+                    case "A":
+                        currentJob = "Postdoc";
+                        break;
+                    case "B":
+                        currentJob = "Lecturer";
+                        break;
+                    case "C":
+                        currentJob = "Senior Lecturer";
+                        break;
+                    case "D":
+                        currentJob = "Associate Professor";
+                        break;
+                    case "E":
+                        currentJob = "Professor";
+                        break;   */
+
+                if(value == "Student")
+                {
+                    currentJob = "Student";
+                    return;
+                }else if(value =="A")
+                {
+                    currentJob = "Postdoc";
+                    return;
+                }
+                else if (value == "B")
+                {
+                    currentJob = "A";
+                    return;
+                }
+                else
+                {
+                    currentJob = "C";
+                    return;
+                }
+
+
+            }
+            get
+            {
+                return currentJob;
+            }
+        }
+
+        //public void GetCurrentJob(EmploymentLevel Level)
+        //{
+        //    string Temp = Level.ToString();
+        //    switch (Temp)
+        //    {
+        //        case "Student":
+        //            CurrentJob = "Student";
+        //            break;
+        //        case "A":
+        //            CurrentJob = "Postdoc";
+        //            break;
+        //        case "B":
+        //            CurrentJob = "Lecturer";
+        //            break;
+        //        case "C":
+        //            CurrentJob = "Senior Lecturer";
+        //            break;
+        //        case "D":
+        //            CurrentJob = "Associate Professor";
+        //            break;
+        //        case "E":
+        //            CurrentJob = "Professor";
+        //            break;
+        //        default:
+        //            CurrentJob = "None";
+        //            break;
+        //    }
+        //}
 
         /* public Position GetCurrentjob()
           {
