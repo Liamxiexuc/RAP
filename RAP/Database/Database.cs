@@ -33,7 +33,7 @@ namespace RAP.Database
             if (conn == null)
             {
                 //Note: This approach is not thread-safe
-                string connectionString = String.Format("Database={0};Data Source={1};User Id={2};Password={3}", db, server, user, pass);
+                string connectionString = String.Format("Database={0};Data Source={1};User Id={2};Password={3};", db, server, user, pass);
                 conn = new MySqlConnection(connectionString);
             }
             return conn;
@@ -124,8 +124,9 @@ namespace RAP.Database
                         SupervisorId = rdr.GetInt32(11),
                         UtasStart = rdr.GetDateTime(12),
                         CurrentStart = rdr.GetDateTime(13),
-                        CurrentJob = rdr.GetString(7)
-                    }); ;
+                        CurrentJob = rdr.GetString(7),
+                        Tenure = Math.Round((Convert.ToDouble((DateTime.Now - rdr.GetDateTime(12)).TotalDays)/365),2),
+                    });
                 }
             }
             catch (MySqlException e)
@@ -150,18 +151,15 @@ namespace RAP.Database
         public static List<Publication> LoadPublications(int id)
         {
             List<Publication> Publications = new List<Publication>();
-
-
             MySqlConnection conn = GetConnection();
             MySqlDataReader rdr = null;
-
             try
             {
                 conn.Open();
 
-                MySqlCommand cmd = new MySqlCommand("select title, year, type, available, doi, authors, cite_as" +
-                                                    "from publication as pub, researcher_publication as respub " +
-                                                    "where pub.doi=respub.doi and researcher_id=?id", conn);
+                MySqlCommand cmd = new MySqlCommand("select p.title, p.year, p.type, p.available, p.doi, p.authors, p.cite_as" +
+                                                    "from publication as p, researcher_publication as rp " +
+                                                    "where p.doi=rp.doi and researcher_id=?id", conn);
 
                 cmd.Parameters.AddWithValue("id", id);
                 rdr = cmd.ExecuteReader();
@@ -199,7 +197,116 @@ namespace RAP.Database
             return Publications;
         }
 
+        public static string GetSupName(int Id)
+        {
+            string SupName;
+            MySqlConnection conn = GetConnection();
+            MySqlDataReader rdr = null;
+            conn.Open();
+            MySqlCommand cmd = new MySqlCommand("select R.given_name, R.family_name from researcher as R, researcher as S " +
+                                                    "where R.id = S.id and R.id=?id", conn);
+            cmd.Parameters.AddWithValue("id", Id);
+            rdr = cmd.ExecuteReader();
+            if (rdr.Read())
+            {
+                SupName = rdr.GetString(0) + " " + rdr.GetString(1);
+                if (rdr != null)
+                {
+                    rdr.Close();
+                }
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+                return SupName;
+            }
+            else
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();
+                }
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+                return "No data found";
+            }
+        }
 
+        public static int PubCounts(int Id)
+        {
+            int count;
+            MySqlConnection conn = GetConnection();
+            MySqlDataReader rdr = null;
+            conn.Open();
+            MySqlCommand cmd = new MySqlCommand("select count(doi) from researcher_publication " +
+                                                    "where researcher_id=?id", conn);
+            cmd.Parameters.AddWithValue("id", Id);
+            rdr = cmd.ExecuteReader();
+            if (rdr.Read())
+            {
+                count = rdr.GetInt32(0);
+                if (rdr != null)
+                {
+                    rdr.Close();
+                }
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+                return count;
+            }
+            else
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();
+                }
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+                return 0;
+            }
+        }
 
+        public static double GetTYAve(int Id)
+        {
+            double TYAve;
+            MySqlConnection conn = GetConnection();
+            MySqlDataReader rdr = null;
+            conn.Open();
+            MySqlCommand cmd = new MySqlCommand("select count(RP.doi) from researcher_publication as RP, " +
+                                                 "publication as P where RP.doi=P.doi and RP.researcher_id=?id and P.year in (2017, 2018, 2019)", conn);
+            //datediff(Year(Now()), P.year) < 4
+            cmd.Parameters.AddWithValue("id", Id);
+            rdr = cmd.ExecuteReader();
+            if (rdr.Read())
+            {
+                TYAve = Math.Round((Convert.ToDouble(rdr.GetInt32(0)))/3, 2);
+                if (rdr != null)
+                {
+                    rdr.Close();
+                }
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+                return TYAve;
+            }
+            else
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();
+                }
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+                return 0;
+            }
+        }
     }
 }

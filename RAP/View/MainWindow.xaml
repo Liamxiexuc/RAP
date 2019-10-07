@@ -67,11 +67,11 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Commenced with institution:"></Label>
-                        <Label Content="{Binding FullName}"></Label>
+                        <Label Content="{Binding UtasStart}"></Label>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Commenced current position:"></Label>
-                        <Label Content="{Binding FullName}"></Label>
+                        <Label Content="{Binding CurrentStart}"></Label>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Previous positions:"></Label>
@@ -83,7 +83,7 @@
                         <Label Content="Tenure:"></Label>
                         <Label Content="{Binding Tenure}"></Label>
                         <Label Content="Publications:"></Label>
-                        <Label Content="{Binding Publications}"></Label>
+                        <Label Content="{Binding PubCount}"></Label>
                         <Button>Cumulative Count</Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
@@ -101,7 +101,7 @@
                         <Label Content="Degree:"></Label>
                         <Label Content="{Binding Degree}"></Label>
                         <Label Content="Supervisor:"></Label>
-                        <Label Content="{Binding Supervisor}"></Label>
+                        <Label Content="{Binding SupervisorName}"></Label>
                     </StackPanel>
                     <StackPanel>
                         <ListBox Height="200" ItemsSource="{Binding Path=Publications}"/>

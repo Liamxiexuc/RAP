@@ -68,6 +68,17 @@ namespace RAP.View
                     researchFull.Campus = i.Campus;
                     researchFull.Email = i.Email;
                     researchFull.CurrentJob = i.CurrentJob;
+                    researchFull.UtasStart = i.UtasStart;
+                    researchFull.CurrentStart = i.CurrentStart;
+
+                    researchFull.Tenure = i.Tenure;
+
+
+                    researchFull.Degree = i.Degree;
+                    researchFull.SupervisorName = Database.Database.GetSupName( i.Id);
+                    researchFull.PubCount = Database.Database.PubCounts(i.Id);
+                    researchFull.TYAve = Database.Database.GetTYAve(i.Id);
+                    researchFull.Publications = i.Publications;
                     //LBIid.Content = i.Id;
                     //LBIFN.Content = i.GivenName;
                     //LBILN.Content = i.FamilyName;

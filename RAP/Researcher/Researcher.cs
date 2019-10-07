@@ -45,6 +45,8 @@ namespace RAP.Research
 
         public List<Publication> Publications { get; set; }
 
+        public int PubCount { get; set; }
+
         public string School { get; set; }
 
         public Campus Campus { get; set; }
@@ -65,9 +67,15 @@ namespace RAP.Research
 
         public int SupervisorId { set; get; }
 
+        public string SupervisorName { set; get; }
+
+        public double TYAve { set; get; }
+
         public DateTime UtasStart { set; get; }
 
         public DateTime CurrentStart { set; get; }
+
+        public double Tenure { get; set; }
 
         private string currentJob;
 
