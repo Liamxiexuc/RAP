@@ -8,15 +8,12 @@ namespace RAP.Research
 {
     class Staff : Researcher
     {
-        //   public float ThreeYearAverage()
-        //   {
+        public double TYAve { set; get; }
 
-        //   }
+        public float Performance { set; get; }
 
-        //    public float Performance()
-        //   {
-
-        //   }
+        public List<Student> Supervisions { set; get; }
+  
     }
 
 }

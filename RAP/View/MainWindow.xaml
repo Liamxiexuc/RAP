@@ -7,16 +7,16 @@
         mc:Ignorable="d"
         Title="MainWindow" WindowState="Maximized" Loaded="Window_Loaded">
     <Viewbox Stretch="Fill">
-    <Grid Width="1150" Height="600">
+    <Grid Width="1366" Height="768">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="130*"/>
                 <ColumnDefinition Width="270*"/>
                 <ColumnDefinition Width="200*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-            <RowDefinition Height="20"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-        </Grid.RowDefinitions>
+                <RowDefinition Height="20"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
         <DockPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="RAP"></MenuItem>
@@ -104,7 +104,7 @@
                         <Label Content="{Binding SupervisorName}"></Label>
                     </StackPanel>
                     <StackPanel>
-                        <ListBox Height="200" ItemsSource="{Binding Path=Publications}"/>
+                        <ListBox x:Name="lbPublication" Height="200" />
                     </StackPanel>
                 </StackPanel>
             </Grid>

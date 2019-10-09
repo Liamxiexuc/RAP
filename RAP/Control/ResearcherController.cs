@@ -14,35 +14,33 @@ namespace RAP.Control
         private List<Researcher> researcherBasic;
         public List<Researcher> ResearcherBasic { get { return researcherBasic; } set { } }
 
-        private List<Researcher> researcherAll;
-        public List<Researcher> ResearcherAll { get { return researcherAll; } set { } }
 
         private ObservableCollection<Researcher> viewableResearcher;
         public ObservableCollection<Researcher> VisibleReasearcher { get { return viewableResearcher; } set { } }
-
-        public Controller()
-        {
-            researcherBasic = Database.Database.LoadBasic();
-            // ResearcherBasic = Database.Database.FetchBasicresearcherDetails();
-            researcherAll = Database.Database.LoadAll();
-
-            foreach (Researcher r in researcherAll)
-            {
-                r.Publications = Database.Database.LoadPublications(r.Id);
-            }
-
-               viewableResearcher = new ObservableCollection<Researcher>(researcherAll); //this list we will modify later
-
-        }
 
         public ObservableCollection<Researcher> GetViewableList()
         {
             return VisibleReasearcher;
         }
 
+        public Controller()
+        {
+            researcherBasic = Database.Database.LoadBasic();
+
+           
+
+               //  foreach (Researcher r in researcherAll)
+               //  {
+               //     r.Publications = Database.Database.LoadPublications(r.Id);
+               // }
+
+               viewableResearcher = new ObservableCollection<Researcher>(researcherBasic); 
+        }
+
+
         public void LevelFilter(EmploymentLevel employmentLevel)
         {
-            var selected = from Researcher r in researcherAll
+            var selected = from Researcher r in researcherBasic
                            where employmentLevel == EmploymentLevel.All || r.Level == employmentLevel
                            select r;
             viewableResearcher.Clear();
@@ -52,7 +50,7 @@ namespace RAP.Control
         }
         public void NameFilter(string GivenName)
         {
-            var selected = from Researcher r in researcherAll
+            var selected = from Researcher r in researcherBasic
                            where (GivenName == null || GivenName.Length <= 0) || r.GivenName.ToLower().Contains(GivenName.ToLower()) || r.FamilyName.ToLower().Contains(GivenName.ToLower())
 
                            select r;

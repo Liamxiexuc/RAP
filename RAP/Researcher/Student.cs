@@ -8,7 +8,11 @@ namespace RAP.Research
 {
     class Student : Researcher
     {
-        public string degree { get; set; }
+        public string Degree { set; get; }
+
+        public int SupervisorId { set; get; }
+
+        public string SupervisorName { set; get; }
     }
 
 }

@@ -51,7 +51,7 @@ namespace RAP.Database
             {
                 conn.Open();
 
-                MySqlCommand cmd = new MySqlCommand("select title, given_name, family_name, ifnull(level,'Student') as level  from researcher", conn);
+                MySqlCommand cmd = new MySqlCommand("select title, given_name, family_name, id, type, ifnull(level,'Student') as level  from researcher order by family_name", conn);
                 rdr = cmd.ExecuteReader();
 
                 while (rdr.Read())
@@ -63,7 +63,9 @@ namespace RAP.Database
                         Title = rdr.GetString(0),
                         GivenName = rdr.GetString(1),
                         FamilyName = rdr.GetString(2),
-                        Level = ParseEnum<EmploymentLevel>(rdr.GetString(3))
+                        Id = rdr.GetInt32(3),
+                        Type = ParseEnum<Research.Type>(rdr.GetString(4)),
+                        Level = ParseEnum<EmploymentLevel>(rdr.GetString(5))
                     });
                 }
             }
@@ -88,9 +90,9 @@ namespace RAP.Database
 
 
         //For step 2.2 in Week 9 tutorial
-        public static List<Researcher> LoadAll()
+        public static Staff LoadStaffDetails(int Id)
         {
-            List<Researcher> researcherAll = new List<Researcher>();
+            Staff StaffDetails = new Staff();
 
             MySqlConnection conn = GetConnection();
             MySqlDataReader rdr = null;
@@ -100,32 +102,29 @@ namespace RAP.Database
                 conn.Open();
 
                 MySqlCommand cmd = new MySqlCommand("select title, given_name, family_name, id, campus," +
-                    "email, photo, ifnull(level,'Student') as level, type, unit, ifnull(degree,'') as degree, ifnull(supervisor_id, 0) as supervisor_id, utas_start, current_start from researcher order by family_name", conn);
+                    "email, photo, ifnull(level,'Student') as level, unit, utas_start, current_start from researcher where id=?id", conn);
+
+                cmd.Parameters.AddWithValue("id", Id);
                 rdr = cmd.ExecuteReader();
 
                 while (rdr.Read())
                 {
-                    //Note that in your assignment you will need to inspect the *type* of the
-                    //employee/researcher before deciding which kind of concrete class to create.
-                    researcherAll.Add(new Researcher
+                    StaffDetails = (new Staff
                     {
                         Title = rdr.GetString(0),
                         GivenName = rdr.GetString(1),
                         FamilyName = rdr.GetString(2),
-                        FullName = rdr.GetString(1) + " " + rdr.GetString(2),
                         Id = rdr.GetInt32(3),
                         Campus = ParseEnum<Campus>(rdr.GetString(4).Replace(" ", "")),
                         Email = rdr.GetString(5),
                         Photo = rdr.GetString(6),
                         Level = ParseEnum<EmploymentLevel>(rdr.GetString(7)),
-                        Type = ParseEnum<Research.Type>(rdr.GetString(8)),
-                        Unit = rdr.GetString(9),
-                        Degree = rdr.GetString(10),
-                        SupervisorId = rdr.GetInt32(11),
-                        UtasStart = rdr.GetDateTime(12),
-                        CurrentStart = rdr.GetDateTime(13),
-                        CurrentJob = rdr.GetString(7),
-                        Tenure = Math.Round((Convert.ToDouble((DateTime.Now - rdr.GetDateTime(12)).TotalDays)/365),2),
+                        Unit = rdr.GetString(8),
+                        UtasStart = rdr.GetDateTime(9),
+                        CurrentStart = rdr.GetDateTime(10),
+                        CurrentJob = GetJobTitle(rdr.GetString(7)),
+                        FullName = rdr.GetString(1) + " " + rdr.GetString(2),
+                        Tenure = Math.Round((Convert.ToDouble((DateTime.Now - rdr.GetDateTime(9)).TotalDays)/365),2),
                     });
                 }
             }
@@ -145,10 +144,71 @@ namespace RAP.Database
                 }
             }
 
-            return researcherAll;
+            return StaffDetails;
         }
 
-        public static List<Publication> LoadPublications(int id)
+
+        public static Student LoadStudentDetails(int Id)
+        {
+            Student StudentDetails = new Student();
+
+            MySqlConnection conn = GetConnection();
+            MySqlDataReader rdr = null;
+
+            try
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand("select title, given_name, family_name, id, campus," +
+                            "email, photo, ifnull(level,'Student') as level, unit, ifnull(degree,'') as degree, ifnull(supervisor_id, 0) as supervisor_id, utas_start, current_start from researcher where id=?id", conn);
+
+                cmd.Parameters.AddWithValue("id", Id);
+                rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    StudentDetails = (new Student
+                    {
+                        Title = rdr.GetString(0),
+                        GivenName = rdr.GetString(1),
+                        FamilyName = rdr.GetString(2),
+                        Id = rdr.GetInt32(3),
+                        Campus = ParseEnum<Campus>(rdr.GetString(4).Replace(" ", "")),
+                        Email = rdr.GetString(5),
+                        Photo = rdr.GetString(6),
+                        Level = ParseEnum<EmploymentLevel>(rdr.GetString(7)),
+                        Unit = rdr.GetString(8),
+                        Degree = rdr.GetString(9),
+                        SupervisorId = rdr.GetInt32(10),
+                        UtasStart = rdr.GetDateTime(11),
+                        CurrentStart = rdr.GetDateTime(12),                     
+                        CurrentJob = "Student",
+                        FullName = rdr.GetString(1) + " " + rdr.GetString(2),
+                        Tenure = Math.Round((Convert.ToDouble((DateTime.Now - rdr.GetDateTime(11)).TotalDays) / 365), 2),
+                    });
+                }
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Error connecting to database: " + e);
+            }
+            finally
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();
+                }
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return StudentDetails;
+        }
+
+
+        public static List<Publication> LoadPublications(int Id)
         {
             List<Publication> Publications = new List<Publication>();
             MySqlConnection conn = GetConnection();
@@ -157,11 +217,52 @@ namespace RAP.Database
             {
                 conn.Open();
 
-                MySqlCommand cmd = new MySqlCommand("select p.title, p.year, p.type, p.available, p.doi, p.authors, p.cite_as" +
-                                                    "from publication as p, researcher_publication as rp " +
-                                                    "where p.doi=rp.doi and researcher_id=?id", conn);
+                MySqlCommand cmd = new MySqlCommand("select p.title, p.year from publication as p, researcher_publication as rp where p.doi=rp.doi and rp.researcher_id=?id group by year order by title", conn);
 
-                cmd.Parameters.AddWithValue("id", id);
+                cmd.Parameters.AddWithValue("id", Id);
+                rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    Publications.Add(new Publication
+                    {
+                        Title = rdr.GetString(0),
+                        Year = rdr.GetDateTime(1),
+
+                    });
+                }
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Error connecting to database: " + e);
+            }
+            finally
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();
+                }
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return Publications;
+        }
+
+     /*   public static List<Publication> LoadPublications(int Id)
+        {
+            List<Publication> Publications = new List<Publication>();
+            MySqlConnection conn = GetConnection();
+            MySqlDataReader rdr = null;
+            try
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand("select p.title, p.year, p.type, p.available, p.doi, p.authors, p.cite_as from publication as p, researcher_publication as rp where p.doi=rp.doi and rp.researcher_id=?id", conn);
+
+                cmd.Parameters.AddWithValue("id", Id);
                 rdr = cmd.ExecuteReader();
 
                 while (rdr.Read())
@@ -197,6 +298,37 @@ namespace RAP.Database
             return Publications;
         }
 
+    */
+
+        public static string GetJobTitle(string Job)
+        {
+            string JobTitle;
+            switch (Job)
+            {
+                case "Student":
+                    JobTitle = "Student";
+                    break;
+                case "A":
+                    JobTitle = "Postdoc";
+                    break;
+                case "B":
+                    JobTitle = "Lecturer";
+                    break;
+                case "C":
+                    JobTitle = "Senior Lecturer";
+                    break;
+                case "D":
+                    JobTitle = "Associate Professor";
+                    break;
+                case "E":
+                    JobTitle = "Professor";
+                    break;
+                default:
+                    JobTitle = "None";
+                    break;
+            }
+            return JobTitle;
+        }
         public static string GetSupName(int Id)
         {
             string SupName;
