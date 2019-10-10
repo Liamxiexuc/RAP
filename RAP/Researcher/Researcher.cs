@@ -71,7 +71,6 @@ namespace RAP.Research
 
         public string CurrentJob { get; set; }
 
-
         //public void GetCurrentJob(EmploymentLevel Level)
         //{
         //    string Temp = Level.ToString();

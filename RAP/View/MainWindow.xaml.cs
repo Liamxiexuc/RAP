@@ -120,6 +120,7 @@ namespace RAP.View
             }
             Publication publicationDetails = new Publication();
             publicationDetails = Database.Database.LoadPublicationDetails(publicationSel.DOI);
+            //publicationDetails.PubYear = publicationDetails.Year.Year;
 
             spPublicationDetails.DataContext = publicationDetails;
 

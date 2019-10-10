@@ -184,7 +184,7 @@ namespace RAP.Database
                         CurrentStart = rdr.GetDateTime(12),                     
                         CurrentJob = "Student",
                         FullName = rdr.GetString(1) + " " + rdr.GetString(2),
-                        Tenure = Math.Round((Convert.ToDouble((DateTime.Now - rdr.GetDateTime(11)).TotalDays) / 365), 2),
+                        Tenure = Math.Round((Convert.ToDouble((DateTime.Now - rdr.GetDateTime(11)).TotalDays) / 365), 2)
                     });
                 }
             }
@@ -227,8 +227,7 @@ namespace RAP.Database
                     Publications.Add(new Publication
                     {
                         Title = rdr.GetString(0),
-                       // Year = DateTime.ParseExact(rdr.GetInt32(1).ToString(), "yyyy", null),
-                        Year = new DateTime(rdr.GetInt32(1),1 ,1 ),
+                        Year = rdr.GetInt32(1),
                         // doi is the primary key of publication table, so we get doi as an uniqe id to connect to publication details. 
                         DOI = rdr.GetString(2)
                     });
@@ -272,13 +271,14 @@ namespace RAP.Database
                     PublicationDetails = (new Publication
                        {
                            Title = rdr.GetString(0),
-                           Year = new DateTime(rdr.GetInt32(1), 1, 1),
+                           Year = rdr.GetInt32(1),
                            OutputType = ParseEnum<OutputType>(rdr.GetString(2)),
-                           Available = rdr.GetDateTime(3),
+                           AvaDate = rdr.GetDateTime(3),
                            DOI = rdr.GetString(4),
                            Authors = rdr.GetString(5),
-                           CiteAs = rdr.GetString(6)
-                       });
+                           CiteAs = rdr.GetString(6),
+                           Age = Convert.ToInt32((DateTime.Now - rdr.GetDateTime(3)).TotalDays)
+                    });
                    }
                }
                catch (MySqlException e)

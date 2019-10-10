@@ -124,15 +124,15 @@
                   </StackPanel>
                   <StackPanel Orientation="Horizontal">
                     <Label Content="Authors:"></Label>
-                    <Label Content="{Binding FullName}"></Label>
+                        <Label Content="{Binding Authors}"></Label>
                   </StackPanel>
                   <StackPanel Orientation="Horizontal">
                     <Label Content="Publication Year:"></Label>
-                    <Label Content="{Binding PubYear}"></Label>
+                    <Label Content="{Binding Year}"></Label>
                   </StackPanel>
                   <StackPanel Orientation="Horizontal">
                     <Label Content="Type:"></Label>
-                    <Label Content="{Binding Type}"></Label>
+                        <Label Content="{Binding OutputType}"></Label>
                   </StackPanel>
                   <StackPanel Orientation="Horizontal">
                     <Label Content="Cite As:"></Label>

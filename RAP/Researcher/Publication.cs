@@ -18,14 +18,19 @@ namespace RAP.Research
         public string DOI { set; get; }
         public string Title { set; get; }
         public string Authors { set; get; }
-        public DateTime Year { set; get; }
+        public int Year { set; get; }
         public OutputType OutputType { set; get; }
         public string CiteAs { set; get; }
-        public DateTime Available { set; get; }
+        public DateTime AvaDate { set; get; }
+
+        public int Age { set; get; }
+        
+       // public int PubYear { set; get; }
 
         public override string ToString()
         {
-            return Year.Year + "    " + Title;
+            return Year + "    " + Title;
+            
         }
     }
 }
