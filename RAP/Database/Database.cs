@@ -217,7 +217,7 @@ namespace RAP.Database
             {
                 conn.Open();
 
-                MySqlCommand cmd = new MySqlCommand("select p.title, p.year from publication as p, researcher_publication as rp, researcher as r where p.doi=rp.doi and r.id=rp.researcher_id and rp.researcher_id=?id order by p.year desc, p.title", conn);
+                MySqlCommand cmd = new MySqlCommand("select p.title, p.year, p.doi from publication as p, researcher_publication as rp, researcher as r where p.doi=rp.doi and r.id=rp.researcher_id and rp.researcher_id=?id order by p.year desc, p.title", conn);
 
                 cmd.Parameters.AddWithValue("id", Id);
                 rdr = cmd.ExecuteReader();
@@ -228,7 +228,9 @@ namespace RAP.Database
                     {
                         Title = rdr.GetString(0),
                        // Year = DateTime.ParseExact(rdr.GetInt32(1).ToString(), "yyyy", null),
-                        Year = new DateTime(rdr.GetInt32(1),1 ,1 )
+                        Year = new DateTime(rdr.GetInt32(1),1 ,1 ),
+                        // doi is the primary key of publication table, so we get doi as an uniqe id to connect to publication details. 
+                        DOI = rdr.GetString(2)
                     });
                 }
             }
@@ -251,54 +253,54 @@ namespace RAP.Database
             return Publications;
         }
 
-     /*   public static List<Publication> LoadPublications(int Id)
-        {
-            List<Publication> Publications = new List<Publication>();
-            MySqlConnection conn = GetConnection();
-            MySqlDataReader rdr = null;
-            try
-            {
-                conn.Open();
+           public static Publication LoadPublicationDetails(string Doi)
+           {
+               Publication PublicationDetails = new Publication();
+               MySqlConnection conn = GetConnection();
+               MySqlDataReader rdr = null;
+               try
+               {
+                   conn.Open();
 
-                MySqlCommand cmd = new MySqlCommand("select p.title, p.year, p.type, p.available, p.doi, p.authors, p.cite_as from publication as p, researcher_publication as rp where p.doi=rp.doi and rp.researcher_id=?id", conn);
+                   MySqlCommand cmd = new MySqlCommand("select title, year, type, available, doi, authors, cite_as from publication where doi=?doi", conn);
 
-                cmd.Parameters.AddWithValue("id", Id);
-                rdr = cmd.ExecuteReader();
+                   cmd.Parameters.AddWithValue("doi", Doi);
+                   rdr = cmd.ExecuteReader();
 
                 while (rdr.Read())
-                {
-                    Publications.Add(new Publication
-                    {
-                        Title = rdr.GetString(0),
-                        Year = rdr.GetDateTime(1),
-                        OutputType = ParseEnum<OutputType>(rdr.GetString(2)),
-                        Available = rdr.GetDateTime(3),
-                        DOI = rdr.GetString(4),
-                        Authors = rdr.GetString(5),
-                        CiteAs = rdr.GetString(6)
-                    });
-                }
-            }
-            catch (MySqlException e)
-            {
-                Console.WriteLine("Error connecting to database: " + e);
-            }
-            finally
-            {
-                if (rdr != null)
-                {
-                    rdr.Close();
-                }
-                if (conn != null)
-                {
-                    conn.Close();
-                }
-            }
+                   {
+                    PublicationDetails = (new Publication
+                       {
+                           Title = rdr.GetString(0),
+                           Year = new DateTime(rdr.GetInt32(1), 1, 1),
+                           OutputType = ParseEnum<OutputType>(rdr.GetString(2)),
+                           Available = rdr.GetDateTime(3),
+                           DOI = rdr.GetString(4),
+                           Authors = rdr.GetString(5),
+                           CiteAs = rdr.GetString(6)
+                       });
+                   }
+               }
+               catch (MySqlException e)
+               {
+                   Console.WriteLine("Error connecting to database: " + e);
+               }
+               finally
+               {
+                   if (rdr != null)
+                   {
+                       rdr.Close();
+                   }
+                   if (conn != null)
+                   {
+                       conn.Close();
+                   }
+               }
 
-            return Publications;
-        }
+               return PublicationDetails;
+           }
 
-    */
+       
 
         public static string GetJobTitle(string Job)
         {

@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" WindowState="Maximized" Loaded="Window_Loaded">
     <Viewbox Stretch="Fill">
-    <Grid Width="1366" Height="768">
+    <Grid Width="1250" Height="600">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="130*"/>
                 <ColumnDefinition Width="270*"/>
@@ -103,47 +103,51 @@
                         <Label Content="Supervisor:"></Label>
                         <Label Content="{Binding SupervisorName}"></Label>
                     </StackPanel>
-                    <StackPanel>
-                        <ListBox x:Name="lbPublication" Height="200" />
-                    </StackPanel>
                 </StackPanel>
             </Grid>
-            <Grid Grid.Row="1" Grid.Column="2">
+        <Grid Grid.Row="1" Grid.Column="2">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+              </Grid.RowDefinitions>
               <StackPanel>
-                <StackPanel x:Name="d" Orientation="Horizontal">
+                <ListBox x:Name="lbPublication" Grid.Row="0" Height="200" Margin="5,0,5,5" SelectionChanged="LbPublication_SelectionChanged"/>
+              </StackPanel>
+              <StackPanel x:Name="spPublicationDetails" Grid.Row="1">
+                  <StackPanel x:Name="d" Orientation="Horizontal">
                     <Label Content="Title"></Label>
                     <Label Content="{Binding Title}"></Label>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
+                  </StackPanel>
+                  <StackPanel Orientation="Horizontal">
                     <Label Content="DOI:"></Label>
                     <Label Content="{Binding DOI}"></Label>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
+                  </StackPanel>
+                  <StackPanel Orientation="Horizontal">
                     <Label Content="Authors:"></Label>
                     <Label Content="{Binding FullName}"></Label>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
+                  </StackPanel>
+                  <StackPanel Orientation="Horizontal">
                     <Label Content="Publication Year:"></Label>
                     <Label Content="{Binding PubYear}"></Label>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
+                  </StackPanel>
+                  <StackPanel Orientation="Horizontal">
                     <Label Content="Type:"></Label>
                     <Label Content="{Binding Type}"></Label>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
+                  </StackPanel>
+                  <StackPanel Orientation="Horizontal">
                     <Label Content="Cite As:"></Label>
                     <Label Content="{Binding CiteAs}"></Label>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
+                  </StackPanel>
+                  <StackPanel Orientation="Horizontal">
                     <Label Content="Availability Date:"></Label>
                     <Label Content="{Binding AvaDate}"></Label>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
+                  </StackPanel>
+                  <StackPanel Orientation="Horizontal">
                     <Label Content="Age:"></Label>
                     <Label Content="{Binding Age}"></Label>
-                </StackPanel>
+                  </StackPanel>
               </StackPanel>
-            </Grid>
+          </Grid>
     </Grid>
     </Viewbox>
 </Window>

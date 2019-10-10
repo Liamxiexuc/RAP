@@ -44,7 +44,6 @@ namespace RAP.View
         private void LbResearcher_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //get selected researcher object
-            // Researcher researcherSel = (Researcher)lbResearcher.SelectedItem;
             Researcher researcherSel = (Researcher)lbResearcher.SelectedItem;
 
             if ( researcherSel == null )
@@ -73,55 +72,8 @@ namespace RAP.View
 
             List<Publication> listPublication = Database.Database.LoadPublications(researcherSel.Id);
             lbPublication.ItemsSource = listPublication;
-
-
-            //Controller fullconn = new Controller();
-            //List<Researcher> researcherFull = fullconn.ResearcherAll;
-            //List<Researcher> selRes = new List<Researcher>();
-            //foreach (Researcher i in researcherFull)
-            //{
-            //    if (i.Id == researcherSel.Id)
-            //    {
-            //        Researcher researchFull = new Researcher();
-            //        researchFull.Id = i.Id;
-            //        researchFull.GivenName = i.GivenName;
-            //        researchFull.FamilyName = i.FamilyName;
-            //        researchFull.FullName = i.FullName;
-            //        researchFull.Title = i.Title;
-            //        researchFull.Unit = i.Unit;
-            //        researchFull.Campus = i.Campus;
-            //        researchFull.Email = i.Email;
-            //        researchFull.CurrentJob = i.CurrentJob;
-            //        researchFull.UtasStart = i.UtasStart;
-            //        researchFull.CurrentStart = i.CurrentStart;
-
-            //        researchFull.Tenure = i.Tenure;
-
-
-            //        researchFull.Degree = i.Degree;
-            //        researchFull.SupervisorName = Database.Database.GetSupName( i.Id);
-            //        researchFull.PubCount = Database.Database.PubCounts(i.Id);
-            //        researchFull.TYAve = Database.Database.GetTYAve(i.Id);
-            //        researchFull.Publications = i.Publications;
-            //        //LBIid.Content = i.Id;
-            //        //LBIFN.Content = i.GivenName;
-            //        //LBILN.Content = i.FamilyName;
-            //        //LBIemail.Content = i.Email;
-            //        //LBIcampus.Content = i.Campus;
-            //        //LBIschool.Content = i.School;
-            //        //LBItitle.Content = i.Title;
-            //        selRes.Add(researchFull);
-            //    }
-            //}          
-            //spResearcherDetails.DataContext = selRes;
-
-            //List<Publication> xxx = new List<Publication>();
-            //xxx = Database.Database.LoadPublications(researcherSel.Id);
-            //PublicationList.DataContext = xxx;
-
-
-
-
+            //clean publication content 
+            spPublicationDetails.DataContext = null;
         }       
 
         private void DBLevel_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -156,6 +108,21 @@ namespace RAP.View
                 controller.NameFilter(Input);
                 lbResearcher.ItemsSource = controller.GetViewableList();
             }
+        }
+
+        private void LbPublication_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Publication publicationSel = (Publication)lbPublication.SelectedItem;
+
+            if (publicationSel == null)
+            {
+                return;
+            }
+            Publication publicationDetails = new Publication();
+            publicationDetails = Database.Database.LoadPublicationDetails(publicationSel.DOI);
+
+            spPublicationDetails.DataContext = publicationDetails;
+
         }
     }
 }
