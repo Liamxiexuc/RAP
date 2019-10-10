@@ -25,7 +25,7 @@ namespace RAP.Research
 
         public override string ToString()
         {
-            return Year + ", " + Title;
+            return Year.Year + "    " + Title;
         }
     }
 }

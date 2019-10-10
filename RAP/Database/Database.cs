@@ -217,7 +217,7 @@ namespace RAP.Database
             {
                 conn.Open();
 
-                MySqlCommand cmd = new MySqlCommand("select p.title, p.year from publication as p, researcher_publication as rp where p.doi=rp.doi and rp.researcher_id=?id group by year order by title", conn);
+                MySqlCommand cmd = new MySqlCommand("select p.title, p.year from publication as p, researcher_publication as rp, researcher as r where p.doi=rp.doi and r.id=rp.researcher_id and rp.researcher_id=?id order by p.year desc, p.title", conn);
 
                 cmd.Parameters.AddWithValue("id", Id);
                 rdr = cmd.ExecuteReader();
@@ -227,8 +227,8 @@ namespace RAP.Database
                     Publications.Add(new Publication
                     {
                         Title = rdr.GetString(0),
-                        Year = rdr.GetDateTime(1),
-
+                       // Year = DateTime.ParseExact(rdr.GetInt32(1).ToString(), "yyyy", null),
+                        Year = new DateTime(rdr.GetInt32(1),1 ,1 )
                     });
                 }
             }
@@ -335,7 +335,7 @@ namespace RAP.Database
             MySqlConnection conn = GetConnection();
             MySqlDataReader rdr = null;
             conn.Open();
-            MySqlCommand cmd = new MySqlCommand("select R.given_name, R.family_name from researcher as R, researcher as S " +
+            MySqlCommand cmd = new MySqlCommand("select S.given_name, S.family_name from researcher as R, researcher as S " +
                                                     "where R.id = S.id and R.id=?id", conn);
             cmd.Parameters.AddWithValue("id", Id);
             rdr = cmd.ExecuteReader();
