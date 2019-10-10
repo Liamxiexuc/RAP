@@ -88,7 +88,7 @@
                         <Label Content="Previous positions:"></Label>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <ListBox Width="500" Margin="5,5,5,5"> 18/01/2011 position reserved</ListBox>
+                        <ListBox x:Name="lbPrePosition" Width="500" Height="100" Margin="5,5,5,5"></ListBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Tenure:"></Label>
@@ -101,7 +101,7 @@
                         <Label Content="3-year average:"></Label>
                         <Label Content="{Binding TYAve}"></Label>
                         <Label Content="Performance:"></Label>
-                        <Label Content="{Binding PublicationCount}"></Label>
+                        <Label Content="{Binding Performance}"></Label>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Supervisions:"></Label>

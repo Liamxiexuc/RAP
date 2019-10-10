@@ -45,3 +45,9 @@ C:\Users\jinzh\Desktop\506\trunk\RAP\RAP\obj\Debug\RAP.csproj.GenerateResource.c
 C:\Users\jinzh\Desktop\506\trunk\RAP\RAP\obj\Debug\RAP.csproj.CopyComplete
 C:\Users\Administrator\Desktop\Assignment2_506\RAP\KIT506_Hbt_W1200_3\trunk\RAP\RAP\bin\Debug\EPPlus.dll
 C:\Users\Administrator\Desktop\Assignment2_506\RAP\KIT506_Hbt_W1200_3\trunk\RAP\RAP\bin\Debug\EPPlus.xml
+C:\Users\Administrator\Desktop\Assignment2_506\RAP\KIT506_Hbt_W1200_3\trunk\RAP\RAP\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\Users\Administrator\Desktop\Assignment2_506\RAP\KIT506_Hbt_W1200_3\trunk\RAP\RAP\bin\Debug\NPOI.dll
+C:\Users\Administrator\Desktop\Assignment2_506\RAP\KIT506_Hbt_W1200_3\trunk\RAP\RAP\bin\Debug\NPOI.OOXML.dll
+C:\Users\Administrator\Desktop\Assignment2_506\RAP\KIT506_Hbt_W1200_3\trunk\RAP\RAP\bin\Debug\NPOI.OpenXml4Net.dll
+C:\Users\Administrator\Desktop\Assignment2_506\RAP\KIT506_Hbt_W1200_3\trunk\RAP\RAP\bin\Debug\NPOI.OpenXmlFormats.dll
+C:\Users\Administrator\Desktop\Assignment2_506\RAP\KIT506_Hbt_W1200_3\trunk\RAP\RAP\bin\Debug\ICSharpCode.SharpZipLib.xml

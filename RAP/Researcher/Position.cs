@@ -6,29 +6,17 @@ using System.Threading.Tasks;
 
 namespace RAP.Research
 {
-    enum EmploymentLevels
-    {
-        Student,
-        A,
-        B,
-        C,
-        D,
-        E
-    }
+
     class Position
     {
-        public EmploymentLevels level { set; get; }
-        public DateTime start { set; get; }
-        public DateTime end { set; get; }
-        //  public string Title
-        // {
+        public string PositionName { set; get; }
+        public DateTime Start { set; get; }
+        public DateTime End { set; get; }
 
-        // }
-
-        //   public string ToTitle
-        //   {
-
-        //   }
+        public override string ToString()
+        {
+            return Start.ToString("yyyy-MM-dd") + "   " + End.ToString("yyyy-MM-dd") + "   " + PositionName;
+        }
     }
 
 }

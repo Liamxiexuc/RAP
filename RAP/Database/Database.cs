@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RAP.Research;
+using NPOI.SS.Util;
 
 namespace RAP.Database
 {
@@ -332,8 +333,8 @@ namespace RAP.Database
             MySqlConnection conn = GetConnection();
             MySqlDataReader rdr = null;
             conn.Open();
-            MySqlCommand cmd = new MySqlCommand("select S.given_name, S.family_name from researcher as R, researcher as S " +
-                                                    "where R.id = S.id and R.id=?id", conn);
+            MySqlCommand cmd = new MySqlCommand("select given_name, family_name from researcher " +
+                                                 "where id = (select supervisor_id from researcher where id=?id)", conn);
             cmd.Parameters.AddWithValue("id", Id);
             rdr = cmd.ExecuteReader();
             if (rdr.Read())
@@ -399,7 +400,7 @@ namespace RAP.Database
             rdr = cmd.ExecuteReader();
             if (rdr.Read())
             {
-                TYAve = Math.Round((Convert.ToDouble(rdr.GetInt32(0)))/3, 2);
+                TYAve = Math.Round((Convert.ToDouble(rdr.GetInt32(0)))/3, 3);
                 if (rdr != null)
                 {
                     rdr.Close();
@@ -422,6 +423,81 @@ namespace RAP.Database
                 }
                 return 0;
             }
+        }
+
+        public static string GetPerformance(EmploymentLevel level, double TYAve)
+        {
+            string Performance;
+            double ExpectedNum;
+            string LevelStr = level.ToString(); 
+            switch (LevelStr)
+            {
+                case "A":
+                    ExpectedNum = 0.5;
+                    break;
+                case "B":
+                    ExpectedNum = 1;
+                    break;
+                case "C":
+                    ExpectedNum = 2;
+                    break;
+                case "D":
+                    ExpectedNum = 3.2;
+                    break;
+                case "E":
+                    ExpectedNum = 4;
+                    break;
+                default:
+                    return "";
+            }
+
+            //Transfer to string type
+            Performance = (TYAve / ExpectedNum).ToString("0.#%");
+
+            return Performance;
+        }
+
+        public static List<Position> LoadPrePositions(int Id)
+        {
+            List<Position> listPrePositions = new List<Position>();
+            MySqlConnection conn = GetConnection();
+            MySqlDataReader rdr = null;
+            try
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand("select level, start, ifnull(end, current_date()) as end from position where id=?id order by start", conn);
+
+                cmd.Parameters.AddWithValue("id", Id);
+                rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    listPrePositions.Add(new Position
+                    {
+                        PositionName = GetJobTitle(rdr.GetString(0)),
+                        Start = rdr.GetDateTime(1),
+                        End = rdr.GetDateTime(2)
+                    });
+                }
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Error connecting to database: " + e);
+            }
+            finally
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();
+                }
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return listPrePositions;
         }
     }
 }

@@ -55,8 +55,6 @@ namespace RAP.Research
 
         public string Photo { get; set; }
 
-     //   public string Basic { get; set; }
-
         public EmploymentLevel Level { set; get; }
 
         public Type Type { set; get; }
@@ -70,49 +68,6 @@ namespace RAP.Research
         public double Tenure { get; set; }
 
         public string CurrentJob { get; set; }
-
-        //public void GetCurrentJob(EmploymentLevel Level)
-        //{
-        //    string Temp = Level.ToString();
-        // 
-        //    }
-        //}
-
-       /*  public string GetCurrentjob()
-          {
-            public string name { get; set }
-            return name
-          } */ 
-
-        //  public string CurrentJobTitle()
-        //  {
-
-        //  }
-
-        //  public Date CurrentJobStart()
-        //   {
-
-        //  }
-
-        //  public Position GetEarliestJob()
-        // {
-
-        // }
-
-        //  public Date EarliestStart()
-        //  {
-
-        //  }
-
-        //  public float Tenure()
-        //  {
-
-        //  }
-
-        // public int PublicationsCount()
-        // {
-
-        //  }
 
         public override string ToString()
         {

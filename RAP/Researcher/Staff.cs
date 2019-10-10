@@ -10,9 +10,11 @@ namespace RAP.Research
     {
         public double TYAve { set; get; }
 
-        public float Performance { set; get; }
+        public string Performance { set; get; }
 
         public List<Student> Supervisions { set; get; }
+
+      //  public List<Position> PrePositions { set; get; } 
   
     }
 

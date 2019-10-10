@@ -58,8 +58,15 @@ namespace RAP.View
                 Staff staff = new Staff();
                 staff = Database.Database.LoadStaffDetails(researcherSel.Id);
                 staff.PubCount = Database.Database.PubCounts(researcherSel.Id);
-                staff.TYAve = Database.Database.GetTYAve(researcherSel.Id);
+                // create a varible TYAve to store 3-year average value
+                // we will pass it to GetPerformance function below 
+                double TYAve = Database.Database.GetTYAve(researcherSel.Id);
+                staff.TYAve = TYAve;
+                staff.Performance = Database.Database.GetPerformance(researcherSel.Level, TYAve);
                 spResearcherDetails.DataContext = staff;
+
+                List<Position> listPrePosition = Database.Database.LoadPrePositions(researcherSel.Id);
+                lbPrePosition.ItemsSource = listPrePosition;
             }
             else if( reseacherType == "Student")
             {
