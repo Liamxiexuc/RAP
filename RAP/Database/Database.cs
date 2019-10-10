@@ -88,8 +88,6 @@ namespace RAP.Database
             return researcherBasic;
         }
 
-
-        //For step 2.2 in Week 9 tutorial
         public static Staff LoadStaffDetails(int Id)
         {
             Staff StaffDetails = new Staff();
@@ -146,7 +144,6 @@ namespace RAP.Database
 
             return StaffDetails;
         }
-
 
         public static Student LoadStudentDetails(int Id)
         {
@@ -207,7 +204,6 @@ namespace RAP.Database
             return StudentDetails;
         }
 
-
         public static List<Publication> LoadPublications(int Id)
         {
             List<Publication> Publications = new List<Publication>();
@@ -252,7 +248,7 @@ namespace RAP.Database
             return Publications;
         }
 
-           public static Publication LoadPublicationDetails(string Doi)
+        public static Publication LoadPublicationDetails(string Doi)
            {
                Publication PublicationDetails = new Publication();
                MySqlConnection conn = GetConnection();
@@ -300,8 +296,6 @@ namespace RAP.Database
                return PublicationDetails;
            }
 
-       
-
         public static string GetJobTitle(string Job)
         {
             string JobTitle;
@@ -331,6 +325,7 @@ namespace RAP.Database
             }
             return JobTitle;
         }
+
         public static string GetSupName(int Id)
         {
             string SupName;
@@ -378,31 +373,17 @@ namespace RAP.Database
                                                     "where researcher_id=?id", conn);
             cmd.Parameters.AddWithValue("id", Id);
             rdr = cmd.ExecuteReader();
-            if (rdr.Read())
+            count = rdr.Read() ? rdr.GetInt32(0) : 0;
+
+            if (rdr != null)
             {
-                count = rdr.GetInt32(0);
-                if (rdr != null)
-                {
-                    rdr.Close();
-                }
-                if (conn != null)
-                {
-                    conn.Close();
-                }
-                return count;
+               rdr.Close();
             }
-            else
+            if (conn != null)
             {
-                if (rdr != null)
-                {
-                    rdr.Close();
-                }
-                if (conn != null)
-                {
-                    conn.Close();
-                }
-                return 0;
+               conn.Close();
             }
+               return count;
         }
 
         public static double GetTYAve(int Id)
