@@ -50,6 +50,8 @@ namespace RAP.View
             {
                 return;
             }
+            //Initialize Component
+            lbSupName.Visibility = Visibility.Collapsed;
 
             string reseacherType = Convert.ToString(researcherSel.Type);
 
@@ -58,12 +60,16 @@ namespace RAP.View
                 Staff staff = new Staff();
                 staff = Database.Database.LoadStaffDetails(researcherSel.Id);
                 staff.PubCount = Database.Database.PubCounts(researcherSel.Id);
+                staff.SupervisionsCount = Database.Database.GetSupCount(researcherSel.Id);
                 // create a varible TYAve to store 3-year average value
                 // we will pass it to GetPerformance function below 
                 double TYAve = Database.Database.GetTYAve(researcherSel.Id);
                 staff.TYAve = TYAve;
                 staff.Performance = Database.Database.GetPerformance(researcherSel.Level, TYAve);
                 spResearcherDetails.DataContext = staff;
+                // Switch "Show Name" button visibility to visible for staff.
+                btnShowSupName.Visibility = Visibility.Visible;
+                lbSupName.ItemsSource = Database.Database.GetSupervisionsList(researcherSel.Id);
 
                 List<Position> listPrePosition = Database.Database.LoadPrePositions(researcherSel.Id);
                 lbPrePosition.ItemsSource = listPrePosition;
@@ -75,6 +81,8 @@ namespace RAP.View
                 student.SupervisorName = Database.Database.GetSupName(researcherSel.Id);
                 student.PubCount = Database.Database.PubCounts(researcherSel.Id);
                 spResearcherDetails.DataContext = student;
+                // Hide the "Show Name" button for student
+                btnShowSupName.Visibility = Visibility.Collapsed;
             }
 
             List<Publication> listPublication = Database.Database.LoadPublications(researcherSel.Id);
@@ -131,6 +139,12 @@ namespace RAP.View
 
             spPublicationDetails.DataContext = publicationDetails;
 
+        }
+
+        private void BtnShowSupName_Click(object sender, RoutedEventArgs e)
+        {
+            //When user click Show Name button, display the name list.
+            lbSupName.Visibility = Visibility.Visible;
         }
     }
 }

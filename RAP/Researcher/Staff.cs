@@ -14,8 +14,9 @@ namespace RAP.Research
 
         public List<Student> Supervisions { set; get; }
 
-      //  public List<Position> PrePositions { set; get; } 
-  
+        public int SupervisionsCount { set; get; }
+
+
     }
 
 }

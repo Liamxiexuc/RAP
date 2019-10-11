@@ -88,7 +88,7 @@
                         <Label Content="Previous positions:"></Label>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <ListBox x:Name="lbPrePosition" Width="500" Height="100" Margin="5,5,5,5"></ListBox>
+                        <ListBox x:Name="lbPrePosition" Width="500" Height="80" Margin="5,5,5,5"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Tenure:"></Label>
@@ -105,8 +105,11 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Supervisions:"></Label>
-                        <Label Content="{Binding Supervisions}"></Label>
-                        <Button>Show Names</Button>
+                        <Label Content="{Binding SupervisionsCount}"></Label>
+                        <Button x:Name="btnShowSupName" Visibility="Collapsed" Click="BtnShowSupName_Click">Show Names</Button>
+                    </StackPanel>
+                    <StackPanel>
+                        <ListBox x:Name="lbSupName" Width="500" Height="40" Margin="-5,8,5,5" Visibility="Collapsed"></ListBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Degree:"></Label>

@@ -13,6 +13,11 @@ namespace RAP.Research
         public int SupervisorId { set; get; }
 
         public string SupervisorName { set; get; }
+
+        public override string ToString()
+        {
+            return FullName;
+        }
     }
 
 }

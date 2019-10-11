@@ -499,5 +499,73 @@ namespace RAP.Database
 
             return listPrePositions;
         }
+
+        public static int GetSupCount(int Id)
+        {
+            int SupCount;
+            MySqlConnection conn = GetConnection();
+            MySqlDataReader rdr = null;
+            conn.Open();
+            MySqlCommand cmd = new MySqlCommand("select count(id) from researcher where supervisor_id = ?id", conn);
+
+            cmd.Parameters.AddWithValue("id", Id);
+            rdr = cmd.ExecuteReader();
+
+            SupCount = rdr.Read() ? rdr.GetInt32(0) : 0;
+
+            if (rdr != null)
+            {
+                rdr.Close();
+            }
+            if (conn != null)
+            {
+                conn.Close();
+            }
+            return SupCount;    
+        }
+
+        public static List<Student> GetSupervisionsList(int Id)
+        {
+            List<Student> SupervisionsList = new List<Student>();
+            MySqlConnection conn = GetConnection();
+            MySqlDataReader rdr = null;
+            try
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand("select given_name, family_name from researcher where supervisor_id=?id order by given_name", conn);
+
+                cmd.Parameters.AddWithValue("id", Id);
+                rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    SupervisionsList.Add(new Student
+                    {
+                        FullName = rdr.GetString(0) + " " + rdr.GetString(1)
+                    }) ;
+                }
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Error connecting to database: " + e);
+            }
+            finally
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();
+                }
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return SupervisionsList;
+        }
     }
+
+    
 }
+
