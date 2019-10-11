@@ -26,17 +26,8 @@ namespace RAP.Control
         public Controller()
         {
             researcherBasic = Database.Database.LoadBasic();
-
-           
-
-               //  foreach (Researcher r in researcherAll)
-               //  {
-               //     r.Publications = Database.Database.LoadPublications(r.Id);
-               // }
-
-               viewableResearcher = new ObservableCollection<Researcher>(researcherBasic); 
+            viewableResearcher = new ObservableCollection<Researcher>(researcherBasic); 
         }
-
 
         public void LevelFilter(EmploymentLevel employmentLevel)
         {
@@ -46,8 +37,8 @@ namespace RAP.Control
             viewableResearcher.Clear();
             //Converts the result of the LINQ expression to a List and then calls viewableResearcher.Add with each element of that list in turn
             selected.ToList().ForEach(viewableResearcher.Add);
-
         }
+
         public void NameFilter(string GivenName)
         {
             var selected = from Researcher r in researcherBasic
@@ -57,10 +48,8 @@ namespace RAP.Control
             viewableResearcher.Clear();
             //Converts the result of the LINQ expression to a List and then calls viewableResearcher.Add with each element of that list in turn
             selected.ToList().ForEach(viewableResearcher.Add);
-
         }
        
-
 
      }
 

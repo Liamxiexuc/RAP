@@ -52,6 +52,7 @@ namespace RAP.View
             }
             //Initialize Component
             lbSupName.Visibility = Visibility.Collapsed;
+            lbPrePosition.ItemsSource = null;
 
             string reseacherType = Convert.ToString(researcherSel.Type);
 
