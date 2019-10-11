@@ -85,10 +85,10 @@
                         <Label Content="{Binding CurrentStart}"></Label>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="Previous positions:"></Label>
+                        <Label Name="lablePrePosition" Content="Previous positions:" Visibility="Collapsed"></Label>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <ListBox x:Name="lbPrePosition" Width="500" Height="53" Margin="5,5,5,5"/>
+                        <ListBox x:Name="lbPrePosition" Width="500" Height="53" Visibility="Collapsed" Margin="5,5,5,5"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Tenure:"></Label>
@@ -97,30 +97,50 @@
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Publications:"></Label>
                         <Label Content="{Binding PubCount}" ></Label>
-                        <Button >Cumulative Count</Button>
+                        <Button Height="20" Margin="20,0,0,0">Cumulative Count</Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <ListBox></ListBox>
+                        <ListBox x:Name="lbCumCount" Width="500" Height="38" Margin="5,5,5,5" Visibility="Collapsed"></ListBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="3-year average:"></Label>
-                        <Label Content="{Binding TYAve}"></Label>
-                        <Label Content="Performance:"></Label>
-                        <Label Content="{Binding Performance}"></Label>
-                    </StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="250"/>
+                                <ColumnDefinition Width="250"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Grid.Column="0">
+                                <Label Content="3-year average:" ></Label>
+                                <Label Content="{Binding TYAve}" ></Label>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Grid.Column="1">
+                                <Label Content="Performance:" ></Label>
+                                <Label Content="{Binding Performance}" ></Label>
+                            </StackPanel>
+                        </Grid>
+            </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Supervisions:"></Label>
                         <Label Content="{Binding SupervisionsCount}"></Label>
-                        <Button x:Name="btnShowSupName" Visibility="Collapsed" Click="BtnShowSupName_Click">Show Names</Button>
+                        <Button x:Name="btnShowSupName" Visibility="Collapsed" Height="20" Margin="20,0,0,0" Click="BtnShowSupName_Click">Show Names</Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <ListBox x:Name="lbSupName" Width="500" Height="38" Margin="5,5,5,5" Visibility="Collapsed"></ListBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="Degree:"></Label>
-                        <Label Content="{Binding Degree}"></Label>
-                        <Label Content="Supervisor:"></Label>
-                        <Label Content="{Binding SupervisorName}"></Label>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="250"/>
+                                <ColumnDefinition Width="250"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Grid.Column="0">
+                                <Label Content="Degree:"></Label>
+                                <Label Content="{Binding Degree}"></Label>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Grid.Column="1">
+                                <Label Content="Supervisor:" ></Label>
+                                <Label Content="{Binding SupervisorName}"></Label>
+                            </StackPanel>
+                        </Grid>
                     </StackPanel>
                 </StackPanel>
             </Grid>
@@ -131,7 +151,7 @@
               </Grid.RowDefinitions>
               <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="5,0,5,5">
-                        <Label Content="Start Year:" Margin="0,0,5,0"/>
+                        <Label Content="From:" Margin="0,0,5,0"/>
                         <ComboBox Name="cbStartYear" Width="52" VerticalContentAlignment="Center" >
                             <ComboBoxItem Content="2019" />
                             <ComboBoxItem Content="2018" />
@@ -149,7 +169,7 @@
                             <ComboBoxItem Content="2006" />
                             <ComboBoxItem Content="2005" />
                         </ComboBox>
-                        <Label Content="End Year:" Margin="5,0,5,0" />
+                        <Label Content="To:" Margin="5,0,5,0" />
                         <ComboBox Name="cbEndYear" Width="52" VerticalContentAlignment="Center" >
                             <ComboBoxItem Content="2019" />
                             <ComboBoxItem Content="2018" />
@@ -167,6 +187,7 @@
                             <ComboBoxItem Content="2006" />
                             <ComboBoxItem Content="2005" />
                         </ComboBox>
+                        <Button x:Name="btnPubSearch" Margin="13,0,0,0" Width="50" Click="BtnPubSearch_Click" >Search</Button>
                         <Label Content="Sort" Margin="20,0,5,0" />
                         <ComboBox Name="cbSort" Width="96" >
                             <ComboBoxItem Content="Oldest First" />

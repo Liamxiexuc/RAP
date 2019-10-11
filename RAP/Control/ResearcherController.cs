@@ -70,6 +70,16 @@ namespace RAP.Control
             selected.ToList().ForEach(viewablePublication.Add);
         }
 
+        public void PubOrder(List<Publication> pubList)
+        {
+            List<Publication> newOrder = new List<Publication>();
+            var res = from Publication p in pubList
+                      orderby p.Year descending
+                      select p;
+            viewablePublication.Clear();
+            res.ToList().ForEach(viewablePublication.Add);
+        }
+
 
     }
 

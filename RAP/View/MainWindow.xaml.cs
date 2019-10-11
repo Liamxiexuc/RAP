@@ -25,6 +25,8 @@ namespace RAP.View
     {
         private Controller controller = new Controller();
 
+        Researcher researcherSel = new Researcher();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -51,7 +53,10 @@ namespace RAP.View
                 return;
             }
             //Initialize Component
+            btnShowSupName.Visibility = Visibility.Collapsed;
             lbSupName.Visibility = Visibility.Collapsed;
+            lbPrePosition.Visibility = Visibility.Collapsed;
+            lablePrePosition.Visibility = Visibility.Collapsed;
             lbPrePosition.ItemsSource = null;
 
             string reseacherType = Convert.ToString(researcherSel.Type);
@@ -68,8 +73,15 @@ namespace RAP.View
                 staff.TYAve = TYAve;
                 staff.Performance = Database.Database.GetPerformance(researcherSel.Level, TYAve);
                 spResearcherDetails.DataContext = staff;
-                // Switch "Show Name" button visibility to visible for staff.
-                btnShowSupName.Visibility = Visibility.Visible;
+                // Switch "Show Name" button visibility to visible for staff whose PubCounts are not 0.
+                if(staff.SupervisionsCount != 0)
+                {
+                    btnShowSupName.Visibility = Visibility.Visible;
+                }
+
+                lbPrePosition.Visibility = Visibility.Visible;
+                lablePrePosition.Visibility = Visibility.Visible;
+
                 lbSupName.ItemsSource = Database.Database.GetSupervisionsList(researcherSel.Id);
 
                 List<Position> listPrePosition = Database.Database.LoadPrePositions(researcherSel.Id);
@@ -148,6 +160,11 @@ namespace RAP.View
             lbSupName.Visibility = Visibility.Visible;
         }
 
-
+        private void BtnPubSearch_Click(object sender, RoutedEventArgs e)
+        {
+            int StartYear = (int)cbStartYear.SelectedItem;
+            int EndYear = (int)cbEndYear.SelectedItem;
+            
+        }
     }
 }
