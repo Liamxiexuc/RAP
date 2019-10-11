@@ -566,6 +566,7 @@ namespace RAP.Database
         }
     }
 
-    
+    //  SELECT RP.researcher_id, R.utas_start, COUNT(P.doi), P.year from publication as P, researcher_publication as RP, researcher as R WHERE RP.doi = P.doi AND R.id = RP.researcher_id And R.id = 123461
+
 }
 

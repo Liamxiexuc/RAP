@@ -147,5 +147,7 @@ namespace RAP.View
             //When user click Show Name button, display the name list.
             lbSupName.Visibility = Visibility.Visible;
         }
+
+
     }
 }

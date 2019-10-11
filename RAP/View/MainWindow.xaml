@@ -126,13 +126,58 @@
             </Grid>
         <Grid Grid.Row="1" Grid.Column="2">
               <Grid.RowDefinitions>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
               </Grid.RowDefinitions>
               <StackPanel>
-                <ListView x:Name="lbPublication" Grid.Row="0" Height="200" Margin="5,0,5,5" SelectionChanged="LbPublication_SelectionChanged"/>
-              </StackPanel>
-              <StackPanel x:Name="spPublicationDetails" Grid.Row="1">
+                    <StackPanel Orientation="Horizontal" Margin="5,0,5,5">
+                        <Label Content="Start Year:" Margin="0,0,5,0"/>
+                        <ComboBox Name="cbStartYear" Width="52" VerticalContentAlignment="Center" >
+                            <ComboBoxItem Content="2019" />
+                            <ComboBoxItem Content="2018" />
+                            <ComboBoxItem Content="2017" />
+                            <ComboBoxItem Content="2016" />
+                            <ComboBoxItem Content="2015" />
+                            <ComboBoxItem Content="2014" />
+                            <ComboBoxItem Content="2013" />
+                            <ComboBoxItem Content="2012" />
+                            <ComboBoxItem Content="2011" />
+                            <ComboBoxItem Content="2010" />
+                            <ComboBoxItem Content="2009" />
+                            <ComboBoxItem Content="2008" />
+                            <ComboBoxItem Content="2007" />
+                            <ComboBoxItem Content="2006" />
+                            <ComboBoxItem Content="2005" />
+                        </ComboBox>
+                        <Label Content="End Year:" Margin="5,0,5,0" />
+                        <ComboBox Name="cbEndYear" Width="52" VerticalContentAlignment="Center" >
+                            <ComboBoxItem Content="2019" />
+                            <ComboBoxItem Content="2018" />
+                            <ComboBoxItem Content="2017" />
+                            <ComboBoxItem Content="2016" />
+                            <ComboBoxItem Content="2015" />
+                            <ComboBoxItem Content="2014" />
+                            <ComboBoxItem Content="2013" />
+                            <ComboBoxItem Content="2012" />
+                            <ComboBoxItem Content="2011" />
+                            <ComboBoxItem Content="2010" />
+                            <ComboBoxItem Content="2009" />
+                            <ComboBoxItem Content="2008" />
+                            <ComboBoxItem Content="2007" />
+                            <ComboBoxItem Content="2006" />
+                            <ComboBoxItem Content="2005" />
+                        </ComboBox>
+                        <Label Content="Sort" Margin="20,0,5,0" />
+                        <ComboBox Name="cbSort" Width="96" >
+                            <ComboBoxItem Content="Oldest First" />
+                            <ComboBoxItem Content="Latest First" />
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel>
+                        <ListView x:Name="lbPublication" Grid.Row="0" Height="220" Margin="5,5,5,5" SelectionChanged="LbPublication_SelectionChanged"/>
+                    </StackPanel>
+                </StackPanel>
+              <StackPanel x:Name="spPublicationDetails" Grid.Row="1" Margin="0,10,0,0">
                   <StackPanel x:Name="d" Orientation="Horizontal" Height="auto">
                         <Label Content="Title:"></Label>
                         <TextBlock TextWrapping="Wrap" Text="{Binding Title}" Margin="5,5,5,5" Width="370" />

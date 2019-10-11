@@ -18,15 +18,25 @@ namespace RAP.Control
         private ObservableCollection<Researcher> viewableResearcher;
         public ObservableCollection<Researcher> VisibleReasearcher { get { return viewableResearcher; } set { } }
 
+
+        private ObservableCollection<Publication> viewablePublication;
+        public ObservableCollection<Publication> VisiblePublication { get { return viewablePublication; } set { } }
+
         public ObservableCollection<Researcher> GetViewableList()
         {
             return VisibleReasearcher;
         }
 
+        public ObservableCollection<Publication> GetViewablePubList()
+        {
+            return VisiblePublication;
+        }
+
+
         public Controller()
         {
             researcherBasic = Database.Database.LoadBasic();
-            viewableResearcher = new ObservableCollection<Researcher>(researcherBasic); 
+            viewableResearcher = new ObservableCollection<Researcher>(researcherBasic);
         }
 
         public void LevelFilter(EmploymentLevel employmentLevel)
@@ -49,8 +59,18 @@ namespace RAP.Control
             //Converts the result of the LINQ expression to a List and then calls viewableResearcher.Add with each element of that list in turn
             selected.ToList().ForEach(viewableResearcher.Add);
         }
-       
 
-     }
+        public void YearFilter(List<Publication> pubList, int StartYear, int EndYear)
+        {
+            var selected = from Publication p in pubList
+                           where p.Year >= StartYear && p.Year <= EndYear
+                           select p;
+            viewablePublication.Clear();
+            //Converts the result of the LINQ expression to a List and then calls viewableResearcher.Add with each element of that list in turn
+            selected.ToList().ForEach(viewablePublication.Add);
+        }
+
+
+    }
 
 }
