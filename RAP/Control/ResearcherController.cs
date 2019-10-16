@@ -19,18 +19,18 @@ namespace RAP.Control
         public ObservableCollection<Researcher> VisibleReasearcher { get { return viewableResearcher; } set { } }
 
 
-        private ObservableCollection<Publication> viewablePublication;
-        public ObservableCollection<Publication> VisiblePublication { get { return viewablePublication; } set { } }
+       // private ObservableCollection<Publication> viewablePublication;
+       // public ObservableCollection<Publication> VisiblePublication { get { return viewablePublication; } set { } }
 
         public ObservableCollection<Researcher> GetViewableList()
         {
             return VisibleReasearcher;
         }
 
-        public ObservableCollection<Publication> GetViewablePubList()
-        {
-            return VisiblePublication;
-        }
+     //   public ObservableCollection<Publication> GetViewablePubList()
+      //  {
+       //     return VisiblePublication;
+       // }
 
 
         public Controller()
@@ -60,24 +60,41 @@ namespace RAP.Control
             selected.ToList().ForEach(viewableResearcher.Add);
         }
 
-        public void YearFilter(List<Publication> pubList, int StartYear, int EndYear)
+        public List<Publication> YearFilter(List<Publication> pubList, int StartYear, int EndYear)
         {
+            List<Publication> listFilted = new List<Publication>();
             var selected = from Publication p in pubList
                            where p.Year >= StartYear && p.Year <= EndYear
                            select p;
-            viewablePublication.Clear();
+            listFilted.Clear();
             //Converts the result of the LINQ expression to a List and then calls viewableResearcher.Add with each element of that list in turn
-            selected.ToList().ForEach(viewablePublication.Add);
+            selected.ToList().ForEach(listFilted.Add);
+            return listFilted;
+
         }
 
-        public void PubOrder(List<Publication> pubList)
+        public List<Publication> PubOldFirst(List<Publication> pubList)
+        {
+            List<Publication> newOrder = new List<Publication>();
+            var res = from Publication p in pubList
+                      orderby p.Year 
+                      select p;
+            newOrder.Clear();
+            res.ToList().ForEach(newOrder.Add);
+
+            return newOrder;
+        }
+
+        public List<Publication> PubNewFirst(List<Publication> pubList)
         {
             List<Publication> newOrder = new List<Publication>();
             var res = from Publication p in pubList
                       orderby p.Year descending
                       select p;
-            viewablePublication.Clear();
-            res.ToList().ForEach(viewablePublication.Add);
+            newOrder.Clear();
+            res.ToList().ForEach(newOrder.Add);
+
+            return newOrder;
         }
 
 

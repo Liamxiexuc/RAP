@@ -5,13 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 using RAP.Research;
 using RAP.Control;
 using RAP.Database;
@@ -26,6 +20,7 @@ namespace RAP.View
         private Controller controller = new Controller();
 
         Researcher researcherSel = new Researcher();
+        List<Publication> listPublication = new List<Publication>();
 
         public MainWindow()
         {
@@ -36,9 +31,6 @@ namespace RAP.View
         {
 
             List<Researcher> listResearcher = controller.ResearcherBasic;
-
-            //The use of a delegate here is not necessa ry, but a remnant of the Week 7 tutorial
-            //  doSomething = mycon.Display;
 
             lbResearcher.ItemsSource = listResearcher; 
         }
@@ -100,7 +92,10 @@ namespace RAP.View
 
             List<Publication> listPublication = Database.Database.LoadPublications(researcherSel.Id);
             lbPublication.ItemsSource = listPublication;
-            //clean publication content 
+            researcherSel.Publications = listPublication;
+
+
+                //clean publication content 
             spPublicationDetails.DataContext = null;
         }       
 
@@ -120,6 +115,11 @@ namespace RAP.View
         private void DBLevel_Loaded(object sender, RoutedEventArgs e)
         {
             DBLevel.ItemsSource = System.Enum.GetNames(typeof(EmploymentLevel));
+        }
+
+        private void cbSort_Loaded(object sender, RoutedEventArgs e)
+        {
+            cbSort.ItemsSource = System.Enum.GetNames(typeof(Order));
         }
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
@@ -162,9 +162,37 @@ namespace RAP.View
 
         private void BtnPubSearch_Click(object sender, RoutedEventArgs e)
         {
-            int StartYear = (int)cbStartYear.SelectedItem;
-            int EndYear = (int)cbEndYear.SelectedItem;
-            
+
+                List<Publication> listFilted = new List<Publication>();
+                Researcher SelResearch = (Researcher)lbResearcher.SelectedItem;
+                int StartYear = Convert.ToInt32(cbStartYear.Text);
+                int EndYear = Convert.ToInt32(cbEndYear.Text);
+                ObservableCollection<Publication> viewablePublication = new ObservableCollection<Publication>(listPublication);
+                listFilted = controller.YearFilter(SelResearch.Publications, StartYear, EndYear);
+                lbPublication.ItemsSource = listFilted;
+ 
+        }
+
+        private void cbSort_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            //  spResearcherDetails.DataContext = null;
+            ComboBox cbSort = (ComboBox)sender;
+            List<Publication> listFilted = new List<Publication>();
+            Researcher SelResearch = (Researcher)lbResearcher.SelectedItem;
+            //Get selected value from ComboBox
+            string orderType = cbSort.SelectedItem.ToString();
+            if (orderType == "OldestFirst")
+            {
+                listFilted = controller.PubOldFirst(SelResearch.Publications);
+            }
+            else
+            {
+                listFilted = controller.PubNewFirst(SelResearch.Publications);
+            }
+
+            lbPublication.ItemsSource = listFilted;
+
         }
     }
 }

@@ -12,7 +12,7 @@ namespace RAP.Research
 
         public string Performance { set; get; }
 
-        public List<Student> Supervisions { set; get; }
+       // public List<Student> Supervisions { set; get; }
 
         public int SupervisionsCount { set; get; }
 

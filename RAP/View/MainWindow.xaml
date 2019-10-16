@@ -189,9 +189,7 @@
                         </ComboBox>
                         <Button x:Name="btnPubSearch" Margin="13,0,0,0" Width="50" Click="BtnPubSearch_Click" >Search</Button>
                         <Label Content="Sort" Margin="20,0,5,0" />
-                        <ComboBox Name="cbSort" Width="96" >
-                            <ComboBoxItem Content="Oldest First" />
-                            <ComboBoxItem Content="Latest First" />
+                        <ComboBox Name="cbSort" Width="96" SelectionChanged="cbSort_SelectionChanged" Loaded="cbSort_Loaded">
                         </ComboBox>
                     </StackPanel>
                     <StackPanel>

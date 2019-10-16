@@ -31,6 +31,12 @@ namespace RAP.Research
         CradleCoast
     }
 
+    enum Order
+    {
+        OldestFirst,
+        NewestFirst
+    }
+
     class Researcher
     {
         public int Id { get; set; }

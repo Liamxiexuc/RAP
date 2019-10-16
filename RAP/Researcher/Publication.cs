@@ -13,6 +13,7 @@ namespace RAP.Research
         Journal,
         Other
     }
+
     class Publication
     {
         public string DOI { set; get; }
@@ -26,6 +27,7 @@ namespace RAP.Research
         public int Age { set; get; }
         
        // public int PubYear { set; get; }
+        
 
         public override string ToString()
         {
