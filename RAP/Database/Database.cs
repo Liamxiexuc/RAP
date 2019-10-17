@@ -337,31 +337,19 @@ namespace RAP.Database
                                                  "where id = (select supervisor_id from researcher where id=?id)", conn);
             cmd.Parameters.AddWithValue("id", Id);
             rdr = cmd.ExecuteReader();
-            if (rdr.Read())
+
+            SupName = rdr.Read() ? rdr.GetString(0) + " " + rdr.GetString(1) : "";
+
+            if (rdr != null)
             {
-                SupName = rdr.GetString(0) + " " + rdr.GetString(1);
-                if (rdr != null)
-                {
-                    rdr.Close();
-                }
-                if (conn != null)
-                {
-                    conn.Close();
-                }
-                return SupName;
+                rdr.Close();
             }
-            else
+            if (conn != null)
             {
-                if (rdr != null)
-                {
-                    rdr.Close();
-                }
-                if (conn != null)
-                {
-                    conn.Close();
-                }
-                return "No data found";
+                conn.Close();
             }
+            return SupName;
+           
         }
 
         public static int PubCounts(int Id)
@@ -398,31 +386,18 @@ namespace RAP.Database
             //datediff(Year(Now()), P.year) < 4
             cmd.Parameters.AddWithValue("id", Id);
             rdr = cmd.ExecuteReader();
-            if (rdr.Read())
+            TYAve = rdr.Read() ? Math.Round((Convert.ToDouble(rdr.GetInt32(0))) / 3, 3) : 0;
+
+            if (rdr != null)
             {
-                TYAve = Math.Round((Convert.ToDouble(rdr.GetInt32(0)))/3, 3);
-                if (rdr != null)
-                {
-                    rdr.Close();
-                }
-                if (conn != null)
-                {
-                    conn.Close();
-                }
+                rdr.Close();
+            }
+            if (conn != null)
+            {
+                conn.Close();
+            }
                 return TYAve;
-            }
-            else
-            {
-                if (rdr != null)
-                {
-                    rdr.Close();
-                }
-                if (conn != null)
-                {
-                    conn.Close();
-                }
-                return 0;
-            }
+
         }
 
         public static string GetPerformance(EmploymentLevel level, double TYAve)
