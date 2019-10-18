@@ -51,3 +51,5 @@ C:\Users\Administrator\Desktop\Assignment2_506\RAP\KIT506_Hbt_W1200_3\trunk\RAP\
 C:\Users\Administrator\Desktop\Assignment2_506\RAP\KIT506_Hbt_W1200_3\trunk\RAP\RAP\bin\Debug\NPOI.OpenXml4Net.dll
 C:\Users\Administrator\Desktop\Assignment2_506\RAP\KIT506_Hbt_W1200_3\trunk\RAP\RAP\bin\Debug\NPOI.OpenXmlFormats.dll
 C:\Users\Administrator\Desktop\Assignment2_506\RAP\KIT506_Hbt_W1200_3\trunk\RAP\RAP\bin\Debug\ICSharpCode.SharpZipLib.xml
+C:\Users\Administrator\Desktop\Assignment2_506\RAP\KIT506_Hbt_W1200_3\trunk\RAP\RAP\obj\Debug\View\CumulativeCount.g.cs
+C:\Users\Administrator\Desktop\Assignment2_506\RAP\KIT506_Hbt_W1200_3\trunk\RAP\RAP\obj\Debug\View\CumulativeCount.baml

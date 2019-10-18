@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RAP.Research;
 using NPOI.SS.Util;
+using System.Data;
 
 namespace RAP.Database
 {
@@ -539,9 +540,36 @@ namespace RAP.Database
 
             return SupervisionsList;
         }
+
+        public static DataTable GetPaperStatistics(int researcherid)
+        {           
+            String sql = @"select  cast(d.year as SIGNED) as year,sum(d.doicount) as doicount FROM
+            (
+            select c.year,count(c.doi) as doicount from researcher a,researcher_publication b, publication c
+            where a.id = b.researcher_id and b.doi = c.doi and year(c.year)>= year(a.utas_start) and a.id = ?id group by c.year
+            UNION ALL
+            select 
+            cast(year(a.utas_start) as SIGNED)  as year,0 as doicount from researcher a where a.id=?id) d
+            group by d.year
+            order by d.year";
+            sql = sql.Replace("?id", researcherid.ToString());
+            return GetDataTable(sql);
+        }
+
+        public static DataTable GetDataTable(String sql)
+        {
+            MySqlConnection conn = GetConnection();
+            DataTable dt = new DataTable();
+            using (conn)
+            {
+                MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
+                adapter.Fill(dt);
+            }
+            return dt;
+        }
     }
 
-    //  SELECT RP.researcher_id, R.utas_start, COUNT(P.doi), P.year from publication as P, researcher_publication as RP, researcher as R WHERE RP.doi = P.doi AND R.id = RP.researcher_id And R.id = 123461
+   
 
 }
 

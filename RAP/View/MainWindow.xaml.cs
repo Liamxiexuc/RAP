@@ -194,5 +194,19 @@ namespace RAP.View
             lbPublication.ItemsSource = listFilted;
 
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Researcher researcherSel = (Researcher)lbResearcher.SelectedItem;
+
+            if (researcherSel == null)
+            {
+                return;
+            }
+
+            CumulativeCount w2 = new CumulativeCount();
+            w2.id = researcherSel.Id;
+            w2.Show();
+        }
     }
 }
